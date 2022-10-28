@@ -8,15 +8,27 @@ on:
 jobs:
   build-client:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16 ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Setup npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_KEY }}" > .npmrc
 
       - name: Build
-        working-directory: ./packages/vsopen-install
         run: |
-          pnpm i
           pnpm build
-          pnpm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_KEY }}
+          pnpm -r publish --no-git-checks --access public
