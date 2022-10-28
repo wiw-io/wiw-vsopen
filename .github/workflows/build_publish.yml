@@ -1,0 +1,22 @@
+name: build-client
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ "v*.*.*" ]
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build
+        working-directory: ./packages/vsopen-install
+        run: |
+          pnpm i
+          pnpm build
+          pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_KEY }}
