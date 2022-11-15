@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeConfig = exports.getAllConfig = exports.getConfig = exports.writeFile = exports.getSourceCode = exports.openWithVSCode = exports.fileNum = void 0;
+exports.deleteConfigFile = exports.isHasConfigFile = exports.writeConfig = exports.getAllConfig = exports.getConfig = exports.writeFile = exports.getSourceCode = exports.openWithVSCode = exports.fileNum = void 0;
 const axios_1 = __importDefault(require("axios"));
 const child_process_1 = __importDefault(require("child_process"));
 const fs_1 = __importDefault(require("fs"));
+const shelljs_1 = __importDefault(require("shelljs"));
 exports.fileNum = 0;
 const USER_HOME = process.env.HOME || process.env.USERPROFILE;
 function openWithVSCode(path) {
@@ -86,3 +87,11 @@ const writeConfig = (data) => {
     fs_1.default.writeFileSync(`${USER_HOME}/.vsopen.json`, JSON.stringify(data), { flag: 'w' });
 };
 exports.writeConfig = writeConfig;
+const isHasConfigFile = () => {
+    return shelljs_1.default.ls(`${USER_HOME}/.vsopen.json`).code === 0;
+};
+exports.isHasConfigFile = isHasConfigFile;
+const deleteConfigFile = () => {
+    return shelljs_1.default.rm('-rf', `${USER_HOME}/.vsopen.json`);
+};
+exports.deleteConfigFile = deleteConfigFile;

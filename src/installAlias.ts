@@ -1,20 +1,10 @@
-import child from 'child_process'
-
-const script = `
-if [[ $(alias vsopen) ]]
-then
-  exit 0
-fi
-if [[ $SHELL == '/bin/zsh' ]]
-then
-  echo "alias vsopen='npx -y @wiw-io/vsopen@latest'" >> ~/.zshrc
-elif [[ $SHELL == '/bin/bash' ]]
-then
-  echo "alias vsopen='npx -y @wiw-io/vsopen@latest'" >> ~/.bashrc
-fi
-`
+import shell from 'shelljs'
 
 export const installAlias = () => {
-  child.exec(script)
+  if (!shell.grep('vsopen','~/.bashrc').stdout.startsWith('alias vsopen')) {
+    shell.exec('echo "alias vsopen=\'npx -y -p wiw-vsopen2@latest vsopen\'" >> ~/.bashrc')
+  }
+  if (!shell.grep('vsopen','~/.zshrc').stdout.startsWith('alias vsopen')) {
+    shell.exec('echo "alias vsopen=\'npx -y -p wiw-vsopen2@latest vsopen\'" >> ~/.zshrc')
+  }
 }
-

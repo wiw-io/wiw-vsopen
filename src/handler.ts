@@ -1,16 +1,17 @@
 import * as process from "process";
-import { IContractResult, IOptions } from './types'
+import { IContractResult, IGetOptions } from './types'
 import { getSourceCode, openWithVSCode, writeFile, fileNum, getConfig } from "./utils";
-import { installAlias } from "./installAlias";
 
-async function getContract(address: string, options: IOptions) {
+async function getContract(address: string, options: IGetOptions) {
   const {url, apikey} = getConfig(options);
   const res = await getSourceCode({
     url,
     address,
     apikey,
-  }).then(res => res.data)
-  console.log(res)
+  }).then(res => res.data).catch(err => {
+    console.log('Invalid url. Please check your configuration')
+    process.exit(0)
+  })
   if (res.status === 'NOTOK') {
     console.log(res.result);
     process.exit(0)
@@ -49,8 +50,7 @@ function writeContent (sourceCode: string, contractName: string, path: string, f
   }
 }
 
-export async function handle(address: string, options: IOptions) {
-  installAlias();
+export async function handle(address: string, options: IGetOptions) {
   if (!address.startsWith('0x')) {
     console.log('Invalid address');
     process.exit(0)

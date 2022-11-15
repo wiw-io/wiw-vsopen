@@ -1,7 +1,13 @@
-export interface IOptions {
+export interface IGetOptions {
   path?: string;
   chain?: string;
   name?: string;
+}
+
+export interface IConfigOptions {
+  defaultChain?: string;
+  chain?: string;
+  reset?: boolean;
 }
 
 interface IContractResult {

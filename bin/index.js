@@ -20,6 +20,7 @@ function main() {
             .command('config')
             .option('-dc | --default-chain <defaultChain>', 'configure default chain')
             .option('-c | --chain <chain>', 'configure chain')
+            .option('--reset', 'reset all config')
             .description('configure chain API')
             .action(config_1.configChain);
         commander_1.program

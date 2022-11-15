@@ -1,7 +1,8 @@
 import axios from "axios";
 import child from 'child_process'
-import { IApiResponse, IGetSourceCodeProps, IOptions, IConfig } from "./types";
+import { IApiResponse, IGetSourceCodeProps, IConfig, IGetOptions } from "./types";
 import fs from "fs";
+import shell from "shelljs";
 
 export let fileNum = 0;
 const USER_HOME = process.env.HOME || process.env.USERPROFILE
@@ -52,10 +53,9 @@ export function writeFile(data: string, fileName: string, dir = '') {
   })
 }
 
-export function getConfig(options: IOptions) {
+export function getConfig(options: IGetOptions) {
   try {
-    const data = fs.readFileSync(`${USER_HOME}/.vsopen.json`, 'utf-8');
-    const parseData: IConfig = JSON.parse(data);
+    const parseData = getAllConfig()
     const chain = options.chain || parseData.defaultChain || 'eth';
     const config = parseData.apiConfig.find(i => i.chain === chain);
     if (!config) {
@@ -75,4 +75,21 @@ export function getConfig(options: IOptions) {
     apikey: '',
     chain: '',
   }
+}
+
+export const getAllConfig: () => IConfig = () => {
+  const data = fs.readFileSync(`${USER_HOME}/.vsopen.json`, 'utf-8');
+  return JSON.parse(data);
+}
+
+export const writeConfig = (data: IConfig) => {
+  fs.writeFileSync(`${USER_HOME}/.vsopen.json`, JSON.stringify(data),{ flag: 'w' })
+}
+
+export const isHasConfigFile = () => {
+  return shell.ls(`${USER_HOME}/.vsopen.json`).code === 0
+}
+
+export const deleteConfigFile = () => {
+  return shell.rm('-rf', `${USER_HOME}/.vsopen.json`)
 }

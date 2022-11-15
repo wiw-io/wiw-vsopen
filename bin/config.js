@@ -26,37 +26,46 @@ function setDefaultChain(chain) {
 }
 function configChain(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const config = (0, utils_1.getAllConfig)();
-        if (config.apiConfig.some(i => i.chain === options.defaultChain)) {
-            setDefaultChain(options.defaultChain);
+        if (options.reset) {
+            (0, utils_1.deleteConfigFile)();
+            console.log('Config file has been deleted');
+            process.exit(0);
         }
-        if (options.defaultChain) {
-            // set chain which not exist in api config
-            console.log('Invalid default chain');
-            process.exit(1);
+        const hasConfigFile = (0, utils_1.isHasConfigFile)();
+        let config = {
+            defaultChain: '',
+            apiConfig: [],
+        };
+        if (hasConfigFile) {
+            config = (0, utils_1.getAllConfig)();
+            if (config.apiConfig.some(i => i.chain === options.defaultChain)) {
+                setDefaultChain(options.defaultChain);
+            }
+            if (options.defaultChain) {
+                // set chain which not exist in api config
+                console.log('Invalid default chain');
+                process.exit(1);
+            }
+            console.log('Refer on README.md');
         }
-        console.log('Refer on README.md');
         let result;
-        let selectType = 'chain';
         try {
             result = yield (0, prompts_1.default)([
                 {
                     type: 'select',
                     name: 'type',
                     message: 'choose which one to config',
+                    initial: 0,
                     choices: [
                         {
                             title: 'api url and key',
                             value: 'api',
                         },
-                        {
-                            title: 'set default chain',
-                            value: 'chain'
-                        }
+                        ...(hasConfigFile ? [{
+                                title: 'set default chain',
+                                value: 'chain'
+                            }] : [])
                     ],
-                    onState: (state) => {
-                        selectType = state.value;
-                    }
                 },
                 {
                     type: (type) => type === 'api' ? 'text' : null,
@@ -112,12 +121,12 @@ function configChain(options) {
             console.log(cancelled.message);
             return;
         }
-        console.log(result);
         if (result.type === 'chain') {
             setDefaultChain(result.chain);
         }
         if (result.isCancel) {
-            console.log('No changes applied');
+            console.log('No change applied');
+            process.exit(0);
         }
         const configChain = config.apiConfig.find(i => i.chain === result.chain);
         if (configChain) {
@@ -130,10 +139,13 @@ function configChain(options) {
                 apikey: result.apikey,
                 url: result.url
             });
+            if (!config.defaultChain) {
+                config.defaultChain = result.chain;
+            }
         }
         (0, utils_1.writeConfig)(config);
         console.log(`Successfully configured ${result.chain}`);
-        console.log(`Use 'vsopen <address> -c ${result.chain}' to get contract source code`);
+        console.log(`Use 'vsopen get <address> -c ${result.chain}' to get contract source code`);
     });
 }
 exports.configChain = configChain;

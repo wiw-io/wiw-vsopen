@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.installAlias = void 0;
 const shelljs_1 = __importDefault(require("shelljs"));
 const installAlias = () => {
-    if (!shelljs_1.default.grep('vsopen', '~/.bashrc').stdout.startsWith('vsopen')) {
-        shelljs_1.default.exec('echo "alias vsopen=\'npx -y @wiw-io/vsopen@latest\'" >> ~/.bashrc');
+    if (!shelljs_1.default.grep('vsopen', '~/.bashrc').stdout.startsWith('alias vsopen')) {
+        shelljs_1.default.exec('echo "alias vsopen=\'npx -y -p wiw-vsopen2@latest vsopen\'" >> ~/.bashrc');
     }
-    if (!shelljs_1.default.grep('vsopen', '~/.zshrc').stdout.startsWith('vsopen')) {
-        shelljs_1.default.exec('echo "alias vsopen=\'npx -y @wiw-io/vsopen@latest\'" >> ~/.zshrc');
+    if (!shelljs_1.default.grep('vsopen', '~/.zshrc').stdout.startsWith('alias vsopen')) {
+        shelljs_1.default.exec('echo "alias vsopen=\'npx -y -p wiw-vsopen2@latest vsopen\'" >> ~/.zshrc');
     }
 };
 exports.installAlias = installAlias;

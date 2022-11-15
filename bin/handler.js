@@ -42,7 +42,10 @@ function getContract(address, options) {
             url,
             address,
             apikey,
-        }).then(res => res.data);
+        }).then(res => res.data).catch(err => {
+            console.log('Invalid url. Please check your configuration');
+            process.exit(0);
+        });
         if (res.status === 'NOTOK') {
             console.log(res.result);
             process.exit(0);
