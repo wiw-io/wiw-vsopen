@@ -1,9 +1,11 @@
 {
   "name": "wiw-vsopen2",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
-  "bin": "./bin/index.js",
+  "bin": {
+    "vsopen": "bin/index.js"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
