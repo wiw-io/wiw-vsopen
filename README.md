@@ -8,27 +8,32 @@ You need to prepare something first.
 ### Nodejs > 16
 https://nodejs.org/en/
 
-### VSCode
-https://code.visualstudio.com/
-
-Install and open vscode.
-Press command + shift + P
-Type "alias code command" and choose the first option.
-
 ### Chain API
 https://etherscan.io/apis
 
 Get Api Key at https://etherscan.io/myapikey
 
-## Step
+### VSCode  (Optional)
+https://code.visualstudio.com/
 
-`npx -y -p wiw-vsopen2@latest vsopen`
+Install and open vscode.
+
+Press command + shift + P
+
+Type "alias code command" and choose the first option.
+
+
+## Steps
+
+```npx -y -p wiw-vsopen2@latest vsopen```
 
 Open a new terminal
 
 `vsopen config`
 
 `vsopen get 0xxxxxxxx -c eth`
+
+`vsopen -h`
 
 
 ## F&Q
