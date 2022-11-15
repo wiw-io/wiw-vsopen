@@ -2,16 +2,24 @@
 
 import { handle } from './handler'
 import { program } from "commander";
+import { configChain } from "./config";
 
 
 async function main() {
   program
+    .command('config')
+    .option('-c | --chain <path>', 'default chain')
+    .description('config')
+    .action(configChain)
+  program
+    .command('get')
     .argument('address')
     .option('-p | --path <path>', 'Download path')
     .option('-c | --chain <chain>', 'chain node, eth, bsc etc. default as in config file')
     .option('-n | --name <name>', 'contract name, default as address')
-    .description('Config saved in ~/.vsopen_config.\nUse npx @wiw-io/vsopen-install to install vsopen command and set config.')
+    .description('')
     .action(handle)
+
   await program.parseAsync(process.argv)
 }
 

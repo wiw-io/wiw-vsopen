@@ -29,8 +29,8 @@ interface IGetSourceCodeProps {
 export type IApiResponse = {
   status: string;
   message: string;
-  result: IContractResult[]
-} | 'string'
+  result: IContractResult[]  | 'string'
+}
 
 export interface IConfig {
   defaultChain: string;
@@ -41,4 +41,3 @@ export interface IConfig {
   }[]
 }
 
-declare var Config: IConfig

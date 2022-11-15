@@ -4,6 +4,7 @@ import { IApiResponse, IGetSourceCodeProps, IOptions, IConfig } from "./types";
 import fs from "fs";
 
 export let fileNum = 0;
+const USER_HOME = process.env.HOME || process.env.USERPROFILE
 
 export function openWithVSCode (path: string) {
   child.exec('which code', (err, sto) => {
@@ -14,7 +15,7 @@ export function openWithVSCode (path: string) {
       console.log('You have not installed vscode or you have not set code command.')
       console.log('Step 1: Install and open vscode.')
       console.log('Step 2: Press command + shift + P')
-      console.log('Step 3: Type "install code command" and choose the first option.')
+      console.log('Step 3: Type "alias code command" and choose the first option.')
     }
   });
 }
@@ -52,14 +53,13 @@ export function writeFile(data: string, fileName: string, dir = '') {
 }
 
 export function getConfig(options: IOptions) {
-  const USER_HOME = process.env.HOME || process.env.USERPROFILE
   try {
     const data = fs.readFileSync(`${USER_HOME}/.vsopen.json`, 'utf-8');
     const parseData: IConfig = JSON.parse(data);
     const chain = options.chain || parseData.defaultChain || 'eth';
     const config = parseData.apiConfig.find(i => i.chain === chain);
     if (!config) {
-      console.log('You have not config this chain. Please refer to ""')
+      console.log('You have not configured this chain. Please uses `npx @wiw-io/vsopen-alias` to configure this chain')
       process.exit(0)
     }
     return {
@@ -67,7 +67,7 @@ export function getConfig(options: IOptions) {
       url: config.url,
     }
   } catch (e) {
-    console.log('No config file. Please uses `npx @wiw-io/vsopen-install` to generate a config file')
+    console.log('No config file. Please uses `npx @wiw-io/vsopen-alias` to generate a config file')
     process.exit(0)
   }
   return {

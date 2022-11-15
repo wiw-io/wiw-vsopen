@@ -1,6 +1,7 @@
 import * as process from "process";
-import { IOptions } from './types'
+import { IContractResult, IOptions } from './types'
 import { getSourceCode, openWithVSCode, writeFile, fileNum, getConfig } from "./utils";
+import { installAlias } from "./installAlias";
 
 async function getContract(address: string, options: IOptions) {
   const {url, apikey} = getConfig(options);
@@ -9,11 +10,12 @@ async function getContract(address: string, options: IOptions) {
     address,
     apikey,
   }).then(res => res.data)
-  if (typeof res === 'string') {
-    console.log(res);
+  console.log(res)
+  if (res.status === 'NOTOK') {
+    console.log(res.result);
     process.exit(0)
   }
-  const result = res.result[0];
+  const result = res.result[0] as IContractResult;
   const sourceCode = result.SourceCode
   const contractName = result.ContractName
 
@@ -48,6 +50,11 @@ function writeContent (sourceCode: string, contractName: string, path: string, f
 }
 
 export async function handle(address: string, options: IOptions) {
+  installAlias();
+  if (!address.startsWith('0x')) {
+    console.log('Invalid address');
+    process.exit(0)
+  }
   console.log('Downloading contract...')
   await getContract(address, options)
   console.log(`Downloaded ${fileNum} files in ${options.path || '.'}`)
