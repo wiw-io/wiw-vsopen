@@ -5,19 +5,19 @@ from Blockchain explorers like [Etherscan](https://etherscan.io/), and further s
 [VSCode](https://code.visualstudio.com/download) IDE.
 
 ## Prerequisite
-- **Node.Js**. You need to have [Node](https://nodejs.org/en/) and [NPM](https://nodejs.org/en/) installed on your system to run this tool. It
+- **Node.Js**. You need to have [Node](https://nodejs.org/en/) and [NPM](https://nodejs.org/en/) installed on your system to use this tool. It
  is recommended to have Node version greater than v16.
     ```
     $ node --version
       v16.14.2
     ```
 
-- **API key**. Blockchain explorers will require user register API keys to access their API. For example,
+- **API key**. Blockchain explorers will require user to register API keys to access their API. For example,
  you can get your Etherscan API key from [this link](https://etherscan.io/apis).
 
-- (Optional) **VSCode**. If you want to import downloaded source code into VSCode, you can download
- and install the IDE from its [official release](https://code.visualstudio.com/download). To setup basic
- configurations for smart contract, you may also need to:
+- (Optional) **VSCode**. If you want to import downloaded source code into VSCode, you may download
+ and install the IDE from its [official release](https://code.visualstudio.com/download). Here are some basic configurations
+ for VSCode:
   - [Install 'code' command](https://code.visualstudio.com/docs/setup/mac) into your PATH.
   - Install the 'solidity' language extension for VSCode.
 
@@ -31,7 +31,7 @@ from Blockchain explorers like [Etherscan](https://etherscan.io/), and further s
     ```
     $ vsopen config
     ```
-    Example config for Etherscan:
+    Example config for Ethereum mainnet:
     ```
     {
       "chain": "eth"
@@ -46,12 +46,12 @@ from Blockchain explorers like [Etherscan](https://etherscan.io/), and further s
    bnb-mainnet: https://api.bscscan.com/api
    ```
 
-3. Download source code for audited smart contract:
+3. Download source code for verified smart contract.
    ```
    $ vsopen get <contract_address> -c <chain>
    ```
 
-4. (Optional) Import source code fodler into VSCode.
+4. (Optional) Import source code folder into VSCode.
    ```
    $ code ./
    ```
