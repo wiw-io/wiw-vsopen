@@ -16,7 +16,7 @@ export function openWithVSCode (path: string) {
       console.log('You have not installed vscode or you have not set code command.')
       console.log('Step 1: Install and open vscode.')
       console.log('Step 2: Press command + shift + P')
-      console.log('Step 3: Type "alias code command" and choose the first option.')
+      console.log('Step 3: Type "install code" and choose the first option.')
     }
   });
 }
