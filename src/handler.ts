@@ -9,10 +9,14 @@ async function getContract(address: string, options: IGetOptions) {
     address,
     apikey,
   }).then(res => res.data).catch(err => {
-    console.log('Invalid url. Please check your configuration')
+    if (err.code === 'ECONNABORTED') {
+      console.log('Time out. Please check your network')
+    } else {
+      console.log('Invalid url. Please check your configuration')
+    }
     process.exit(0)
   })
-  if (res.status === 'NOTOK') {
+  if (res.message === 'NOTOK') {
     console.log(res.result);
     process.exit(0)
   }

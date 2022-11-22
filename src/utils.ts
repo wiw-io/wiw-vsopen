@@ -33,6 +33,7 @@ export const getSourceCode = ({
       address,
       apikey,
     },
+    timeout: 20000,
   })
 }
 

@@ -21,7 +21,7 @@ function setDefaultChain(chain) {
     config.defaultChain = chain;
     (0, utils_1.writeConfig)(config);
     console.log(`Successfully set default chain to ${chain}`);
-    console.log(`Use 'vsopen <address>' will automaticly use ${chain}`);
+    console.log(`Use 'vsopen get <address>' will automaticly use ${chain}`);
     process.exit(0);
 }
 function configChain(options) {
