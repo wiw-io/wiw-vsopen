@@ -24,7 +24,7 @@ from Blockchain explorers like [Etherscan](https://etherscan.io/), and further s
 ## Usage
 1. Installation.
    ```
-   $ npm install -g wiw-vsopen2@latest
+   $ npm install -g wiw-vsopen@latest
    ```
 
 2. Configure your API key.
@@ -51,7 +51,4 @@ from Blockchain explorers like [Etherscan](https://etherscan.io/), and further s
    $ vsopen get <contract_address> -c <chain>
    ```
 
-4. (Optional) Import source code folder into VSCode.
-   ```
-   $ code ./
-   ```
+4. (Optional) If 'code' command was installed, VSOPEN will open VSCode with downloaded source code automatically.
