@@ -7,7 +7,7 @@ import shell from "shelljs";
 export let fileNum = 0;
 const USER_HOME = process.env.HOME || process.env.USERPROFILE
 
-export function openWithVSCode (path: string) {
+export function openWithVSCode(path: string) {
   child.exec('which code', (err, sto) => {
     if (sto) {
       console.log('opening vscode');
@@ -34,6 +34,9 @@ export const getSourceCode = ({
       apikey,
     },
     timeout: 20000,
+    headers: {
+      'accept-encoding': 'gzip'
+    }
   })
 }
 
@@ -84,7 +87,7 @@ export const getAllConfig: () => IConfig = () => {
 }
 
 export const writeConfig = (data: IConfig) => {
-  fs.writeFileSync(`${USER_HOME}/.vsopen.json`, JSON.stringify(data),{ flag: 'w' })
+  fs.writeFileSync(`${USER_HOME}/.vsopen.json`, JSON.stringify(data), { flag: 'w' })
 }
 
 export const isHasConfigFile = () => {
